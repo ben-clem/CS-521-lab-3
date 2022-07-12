@@ -13,15 +13,16 @@ Sources:
 ---
 
 <p align="center">
-  <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/325/snake_1f40d.png">
+  <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/325/locked-with-key_1f510.png">
 </p>
 
 <h1 align="center">Lab 3: Code Cracking</h1>
 
-## Game plan
+## Part 0: Design (5 points)
 
-I followed the lab template and instructions.
-
-## Comments
-
-I was surprised that it wasn't more difficult to switch to an NxN-sized version. I had read the entire instructions ahead of time, so that must have helped me anticipate the general solution when I was doing the 3x3. The real challenge was keeping the same graphic style for varying board sizes.
+![img/ceasar.png](img/ceasar.png)
+![img/vigenere.png](img/vigenere.png)
+![img/otp-encoding-1.jpeg](img/otp-encoding-1.jpeg)
+![img/otp-encoding-2.jpeg](img/otp-encoding-2.jpeg)
+![img/otp-encoding-3.jpeg](img/otp-encoding-3.jpeg)
+![img/otp-decoding.jpeg](img/otp-decoding.jpeg)

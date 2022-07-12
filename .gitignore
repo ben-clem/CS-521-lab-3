@@ -1,5 +1,4 @@
-.DS_Store
-instructions.pdf
-letter_frequencies.csv
-message.txt
-wordlist.txt
+*
+!.gitignore
+!cipher.py
+!README.*
