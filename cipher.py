@@ -1,3 +1,11 @@
+"""
+Name: Benoît Clemenceau
+GitHub username: ben-clem (https://github.com/ben-clem)
+Collaborators: None
+Extension: No
+Sources:
+"""
+
 import binascii
 import csv
 import random
@@ -128,7 +136,7 @@ if __name__ == '__main__':
 	print("------------------PART 2: BREAKING CAESAR------------------")
 	cracked = cipher_suite.crack_caesar(cipher_text)
 	print('Cracked Code:', cracked)
-	print("---------------------PART 3: Vignere----------------------")
+	print("---------------------PART 3: Vigenere----------------------")
 	password = 'dog'
 	print('Encryption key: ', password)
 	cipher_text = cipher_suite.encode_vigenere(message, password)
