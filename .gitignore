@@ -1,4 +1,1 @@
-*
-!.gitignore
-!cipher.py
-!README.*
+.DS_Store
