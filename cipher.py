@@ -135,14 +135,15 @@ class Cipher:
         return ''.join(self.rotate_letter(letter, -self.letter_dict[key[index % len(key)]]) for index, letter in enumerate(cipher_text))
 
     def encode_otp(self, message):
-        # Similar to a vernan cipher, but we will generate a random key string and return it
-
-        numeric_message = string_to_binary(message)
-        return None, None
+        """Similar to a vernan cipher, but we will generate a random key string and return it"""
+        key_binary_numeric = binary_string_to_binary(
+            ''.join([get_random_bit() for _ in range(len(message))]))
+        cipher_text = string_to_binary(message) ^ key_binary_numeric
+        return cipher_text, key_binary_numeric
 
     def decode_otp(self, cipher_text, key):
-        # XOR cipher text and key. Convert result to string
-        return None
+        """XOR cipher text and key. Convert result to string"""
+        return binary_to_string(cipher_text ^ key)
 
     def read_wordlist(self):
         # Extra Credit: Read all words in wordlist and store in list. Remember to strip the endline characters
