@@ -135,9 +135,11 @@ class Cipher:
 
     def encode_otp(self, message):
         """Similar to a vernan cipher, but we will generate a random key string and return it"""
+        message_binary_numeric = string_to_binary(message)
+        message_binary_string = binary_to_binary_string(message_binary_numeric)
         key_binary_numeric = binary_string_to_binary(
-            ''.join([get_random_bit() for _ in range(len(message))]))
-        cipher_text = string_to_binary(message) ^ key_binary_numeric
+            ''.join([get_random_bit() for _ in range(len(message_binary_string))]))
+        cipher_text = message_binary_numeric ^ key_binary_numeric
         return cipher_text, key_binary_numeric
 
     def decode_otp(self, cipher_text, key):
