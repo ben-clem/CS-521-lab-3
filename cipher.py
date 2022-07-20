@@ -90,7 +90,7 @@ class Cipher:
         return ''.join(self.rotate_letter(letter, n) for letter in message)
 
     def decode_caesar(self, cipher_text, n):
-        # Decode a cipher text by using rotate_letter the opposite direction and return the original message
+        """Decode a cipher text by using rotate_letter the opposite direction and return the original message"""
         return ''.join(self.rotate_letter(letter, -n) for letter in cipher_text)
 
     def read_csv(self):
@@ -127,12 +127,12 @@ class Cipher:
         return ''.join(self.rotate_letter(letter, -min(scores, key=scores.get)) for letter in cipher_text)
 
     def encode_vigenere(self, message, key):
-        # Encode message using rotation by key string characters
-        return None
+        """Encode message using rotation by key string characters"""
+        return ''.join(self.rotate_letter(letter, self.letter_dict[key[index % len(key)]]) for index, letter in enumerate(message))
 
     def decode_vigenere(self, cipher_text, key):
-        # Decode ciphertext using rotation by key string characters
-        return None
+        """Decode ciphertext using rotation by key string characters"""
+        return ''.join(self.rotate_letter(letter, -self.letter_dict[key[index % len(key)]]) for index, letter in enumerate(cipher_text))
 
     def encode_otp(self, message):
         # Similar to a vernan cipher, but we will generate a random key string and return it
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     decoded = cipher_suite.decode_otp(cipher_text, key)
     print('Cipher Text:', cipher_text)
     print('Generated Key:', key)
-    print('Decoded:', decoded_message)
+    print('Decoded:', decoded)
 
     print('---------PART 5: Breaking Vignere (Extra Credit)----------')
     cipher_text = cipher_suite.encode_vigenere(message, password)
