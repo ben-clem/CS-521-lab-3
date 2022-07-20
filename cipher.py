@@ -77,9 +77,9 @@ class Cipher:
                             'p': 15, 'q': 16, 'r': 17, 's': 18, 't': 19, 'u': 20,
                             'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25, ' ': 26}
         self.inverse_dict = {v: k for k, v in self.letter_dict.items()}
-        # self.letter_heuristics = {}
+        self.letter_heuristics = {}
+        self.read_csv()
         # self.wordlist = []
-        # self.read_csv()
 
     def rotate_letter(self, letter, n):
         """ Rotate a letter by n and return the new letter """
@@ -94,17 +94,37 @@ class Cipher:
         return ''.join(self.rotate_letter(letter, -n) for letter in cipher_text)
 
     def read_csv(self):
-        # Read the letter frequency csv and create a heuristic save in a class variable
-        file = 'letter_frequencies.csv'
+        """Read the letter frequency csv and create a heuristic save in a class variable"""
+        with open('letter_frequencies.csv', mode='r') as letter_frequencies_file:
+            csv_reader = csv.reader(letter_frequencies_file)
+            frequencies = list(csv_reader)[1:]
+            # getting the total frequency
+            sum_frequencies = 0
+            for row in frequencies:
+                sum_frequencies += float(row[1])
+            # computing each letter frequency
+            for row in frequencies:
+                self.letter_heuristics[row[0].lower()] = float(
+                    row[1]) / sum_frequencies
 
     def score_string(self, string):
-        # Score every letter of a string and return the total
-        return 0
+        """Score every letter of a string and return the total"""
+        letter_count = {k: 0 for k, _ in self.letter_dict.items()}
+        total_count = 0
+        for letter in string:
+            letter_count[letter] += 1
+            total_count += 1
+        frequencies = {k: v / total_count for k, v in letter_count.items()}
+
+        frequencies_diffs = {k: abs(v - self.letter_heuristics[k])
+                             for k, v in frequencies.items()}
+        return sum(frequencies_diffs.values())
 
     def crack_caesar(self, cipher_text):
         """Break a caesar cipher by finding and returning the most probable outcome"""
-
-        return None
+        scores = {n: self.score_string(''.join(self.rotate_letter(
+            letter, -n) for letter in cipher_text)) for n in range(0, 27)}
+        return ''.join(self.rotate_letter(letter, -min(scores, key=scores.get)) for letter in cipher_text)
 
     def encode_vigenere(self, message, key):
         # Encode message using rotation by key string characters
