@@ -79,7 +79,7 @@ class Cipher:
         self.inverse_dict = {v: k for k, v in self.letter_dict.items()}
         self.letter_heuristics = {}
         self.read_csv()
-        # self.wordlist = []
+        self.wordlist = []
 
     def rotate_letter(self, letter, n):
         """ Rotate a letter by n and return the new letter """
@@ -115,16 +115,15 @@ class Cipher:
             letter_count[letter] += 1
             total_count += 1
         frequencies = {k: v / total_count for k, v in letter_count.items()}
-
         frequencies_diffs = {k: abs(v - self.letter_heuristics[k])
                              for k, v in frequencies.items()}
         return sum(frequencies_diffs.values())
 
     def crack_caesar(self, cipher_text):
         """Break a caesar cipher by finding and returning the most probable outcome"""
-        scores = {n: self.score_string(''.join(self.rotate_letter(
-            letter, -n) for letter in cipher_text)) for n in range(0, 27)}
-        return ''.join(self.rotate_letter(letter, -min(scores, key=scores.get)) for letter in cipher_text)
+        scores = {n: self.score_string(self.decode_caesar(
+            cipher_text, n)) for n in range(0, 27)}
+        return self.decode_caesar(cipher_text, min(scores, key=scores.get))
 
     def encode_vigenere(self, message, key):
         """Encode message using rotation by key string characters"""
@@ -146,14 +145,20 @@ class Cipher:
         return binary_to_string(cipher_text ^ key)
 
     def read_wordlist(self):
-        # Extra Credit: Read all words in wordlist and store in list. Remember to strip the endline characters
-        filename = "wordlist.txt"
+        """Extra Credit: Read all words in wordlist and store in list. Remember to strip the endline characters"""
+        with open('wordlist.txt', 'r', encoding='UTF-8') as wordlist_file:
+            for line in wordlist_file:
+                self.wordlist.append(line.rstrip())
 
     def crack_vigenere(self, cipher_text):
-        # Extra Credit: Break a vigenere cipher by trying common words as passwords
-        # Return both the original message and the password used
+        """
+        Extra Credit: Break a vigenere cipher by trying common words as passwords
+        Return both the original message and the password used
+        """
         self.read_wordlist()
-        return None, None
+        scores = {word: self.score_string(self.decode_vigenere(
+            cipher_text, word)) for word in self.wordlist}
+        return self.decode_vigenere(cipher_text, min(scores, key=scores.get)), min(scores, key=scores.get)
 
 
 if __name__ == '__main__':
